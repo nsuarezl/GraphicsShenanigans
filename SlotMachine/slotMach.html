@@ -5,41 +5,108 @@
 <HTML lang="en">
 	<HEAD>
 		<META CHARSET="UTF-8">
-			<img id="game-img" src="0.png" width="64" height="64" alt="image for the game">
-			<img id="game-img2" src="0.png" width="64" height="64" alt="image for the game">
-			<img id="game-img3" src="0.png" width="64" height="64" alt="image for the game">
-			<button onclick="play()">Play Game</button>
-			<section id="result"></section>
+			
 			
 		<SCRIPT>
-		class slutMachine {
+		class Main{
+			moneys = 100;
+			slots=[];
+			constructor(){
+				for (let i = 0; i < 3; i++) {
+                	this.slots.push(new slotMachine());
+				}
+				this.moneyThing = document.createElement('section');
+				this.moneyThing.innerText = 'Money - 100';
+				document.body.append(this.moneyThing);
+			}
+			playAll() {
+            this.moneys -= 1;
+            if (this.moneys - this.slots.length < 0) {
+                this.moneyThing.innerText = 'Game Over';
+                return;
+            }
+            let total = 0;
+            for (let slot of this.slots) {
+                
+                slot.playGame();
+                this.money += slot.lastAmt;
+                total += slot.lastAmt;
+            }
+            if (total > 0) {
+                this.moneyThing.innerText = 'Money - ' + this.moneys + '\nWinner - ' + total;
+            }
+            else {
+                this.moneyThing.innerText = 'Money - ' + this.moneys;
+            }
+        }
+			
+
+		}
+		class slotMachine {
+			lastAmt = 0;
+			slotNums = [];
+			slotImg = [];
 			constructor() {
-				this.lastAmt = 0;
-				this.slotNums = [0,0,0];
-				this.slotImg = ["0.png","0.png","0.png"];
+				
+				for (let i = 0; i < 3; i++) {
+					this.slotImg.push(document.createElement('img'));
+		
+					
+					this.slotImg[i].src = '0.png';
+					this.slotImg[i].alt = 'slot machine number';
+					this.slotImg[i].width = "64"
+					document.body.append(this.slotImg[i]);
+
+				}
+				document.body.append(document.createElement('sl'));
 			}
 
 			playGame() {
-				let num1 = Math.floor(Math.random() * 7) + 0;
-				let num2 = Math.floor(Math.random() * 7) + 0;
-				let num3 = Math.floor(Math.random() * 7) + 0;
-				slutMachine.slotNums = [num1,num2,num3];
-				slutMachine.slotImg = [slutMachine.slotNums[0]+".png",slutMachine.slotNums[1]+".png",slutMachine.slotNums[2]+".png"];
-				console.log(slutMachine.slotImg[0])
-				document.getElementById("game-img").src = slutMachine.slotImg[0];
-				document.getElementById("game-img2").src = slutMachine.slotImg[1];
-				document.getElementById("game-img3").src = slutMachine.slotImg[2];
+				for (let i = 0; i < 3; i++) {
+                this.slotNums[i] = (Math.floor(Math.random() * 7));
+                this.slotImg[i].src = this.slotNums[i] + '.png';
+				console.log(i)
+                this.slotImg[i].alt = 'slot machine num  ' + this.slotNums[i].toString();
+           		}
+				   if (this.slotNums[0] == 0 && this.slotNums[1] == 0 && this.slotNums[2] == 0) {
+                this.lastAmt = 14;
+            }
+            else if (this.slotNums[0] == this.slotNums[1] && this.slotNums[1] == this.slotNums[2] && this.slotNums[0] == this.slotNums[2]) {
+                this.lastAmt = 7;
+            }
+            else if (this.slotNums[0] == 0 && this.slotNums[1] == 0) {
+                this.lastAmt = 3;
+            }
+            else if (this.slotNums[0] == this.slotNums[1]) {
+                this.lastAmt = 2;
+            }
+            else if (this.slotNums[0] == 0) {
+                this.lastAmt = 1;
+            }
+            else {
+                this.lastAmt = 0;
+            }
 			}
+
+			
 		}
 
 
-let game = new slutMachine();
 
-function play() {
-    game.playGame();
-}
+
+
 
 		</SCRIPT>
+<body>
+    <button id='play'>Play!</button>
+    <sl>
+  </body>
+  <script>
+    main = new Main();
+    document.getElementById('play').addEventListener('click', function () {
+        main.playAll();
+    });
+  </script>
 	</BODY>
 
 </HTML>
