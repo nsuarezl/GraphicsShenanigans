@@ -1,0 +1,45 @@
+<!-- This HTML file is written for academic purposes -->
+<!-- Author: Nelson Suarez -->
+<!-- Date: 01/18/2023 -->
+
+<HTML lang="en">
+	<HEAD>
+		<META CHARSET="UTF-8">
+			<img id="game-img" src="0.png" width="64" height="64" alt="image for the game">
+			<img id="game-img2" src="0.png" width="64" height="64" alt="image for the game">
+			<img id="game-img3" src="0.png" width="64" height="64" alt="image for the game">
+			<button onclick="play()">Play Game</button>
+			<section id="result"></section>
+			
+		<SCRIPT>
+		class slutMachine {
+			constructor() {
+				this.lastAmt = 0;
+				this.slotNums = [0,0,0];
+				this.slotImg = ["0.png","0.png","0.png"];
+			}
+
+			playGame() {
+				let num1 = Math.floor(Math.random() * 7) + 0;
+				let num2 = Math.floor(Math.random() * 7) + 0;
+				let num3 = Math.floor(Math.random() * 7) + 0;
+				slutMachine.slotNums = [num1,num2,num3];
+				slutMachine.slotImg = [slutMachine.slotNums[0]+".png",slutMachine.slotNums[1]+".png",slutMachine.slotNums[2]+".png"];
+				console.log(slutMachine.slotImg[0])
+				document.getElementById("game-img").src = slutMachine.slotImg[0];
+				document.getElementById("game-img2").src = slutMachine.slotImg[1];
+				document.getElementById("game-img3").src = slutMachine.slotImg[2];
+			}
+		}
+
+
+let game = new slutMachine();
+
+function play() {
+    game.playGame();
+}
+
+		</SCRIPT>
+	</BODY>
+
+</HTML>
